@@ -9,6 +9,61 @@ email does nothing or actively reduces their value?
 The operative word is *incremental*. The goal is not to predict who buys, but to
 estimate whom the email **changes** (the treatment effect).
 
+## 1b. If I were designing this experiment from scratch
+
+The Hillstrom dataset arrives pre-randomized, so this project analyzes an existing
+experiment. But in a production setting the data scientist owns the **design** as
+well as the analysis. Here is how I would design this test before any data exists —
+the same approach I would apply to a real marketing or pricing experiment.
+
+**Division of labor (real-world).** The data scientist designs the experiment and
+specifies the randomization and required sample size; engineering / marketing-ops
+delivers the campaign (sends to treatment, withholds from control) per that spec;
+the data scientist then verifies the split (balance checks) and analyzes the result.
+DS owns the bookends — design and analysis — and specifies the middle.
+
+**1. Define the eligible population.** Decide who is in scope (e.g., active
+customers who purchased in the last 12 months). Scoping up front prevents diluting
+the effect with people the campaign was never meant for.
+
+**2. Define treatment, control, and the unit.** Treatment = receives the promotional
+email; control = receives nothing (or the current default experience). Unit of
+randomization = individual customer.
+
+**3. Randomly assign — using a stable hash, not a coin flip.** Assignment is done
+by hashing a customer identifier, so the same customer always lands in the same
+bucket even if the pipeline reruns or data refreshes mid-experiment:
+
+```python
+import hashlib
+
+def assign_bucket(customer_id, salt="campaign_2026", split=0.5):
+    """Stable, reproducible random assignment."""
+    h = int(hashlib.md5(f"{customer_id}{salt}".encode()).hexdigest(), 16)
+    frac = (h % 10_000) / 10_000          # deterministic number in [0, 1)
+    return "treatment" if frac < split else "control"
+```
+
+Hashing (rather than `random.random()`) guarantees reproducibility and prevents
+customers from silently switching groups across pipeline runs — a subtle but
+important production detail.
+
+**4. Size the groups with a power calculation (Section 5).** Before launch, compute
+the minimum sample size needed to detect the smallest effect worth acting on. This
+determines how long the experiment must run to accumulate enough customers per arm,
+and prevents launching an underpowered test that can never reach a conclusion.
+
+**5. Specify metrics and guardrails (Section 4)** up front, so success criteria are
+fixed before seeing results (no moving the goalposts).
+
+**6. Verify, then analyze.** After the campaign runs, confirm the executed split is
+actually balanced (Section 6 / Sprint 2), then measure the effect (Sprint 3+).
+
+This project demonstrates both halves of the skill: the design reasoning above, and
+the full analysis that follows. *(In prior professional work I designed and analyzed
+A/B and uplift experiments for pricing and marketing strategies; this is a public,
+runnable demonstration of that methodology on an open dataset.)*
+
 ## 2. Experiment setup
 
 | Element | Definition |
