@@ -13,6 +13,14 @@ import pandas as pd
 from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor
 
 
+# Module-level factories (picklable — lambdas are not, which breaks model saving).
+def default_clf():
+    return GradientBoostingClassifier(random_state=0)
+
+def default_reg():
+    return GradientBoostingRegressor(random_state=0)
+
+
 # ----------------------------------------------------------------------
 # S-learner: one model, treatment as a feature, predict twice & difference
 # ----------------------------------------------------------------------
@@ -39,7 +47,7 @@ class SLearner:
 # ----------------------------------------------------------------------
 class TLearner:
     def __init__(self, base_factory=None):
-        self._mk = base_factory if base_factory is not None else (lambda: GradientBoostingClassifier(random_state=0))
+        self._mk = base_factory if base_factory is not None else default_clf
         self.m_t = self._mk()
         self.m_c = self._mk()
 
@@ -68,8 +76,8 @@ class TLearner:
 # ----------------------------------------------------------------------
 class XLearner:
     def __init__(self, outcome_factory=None, effect_factory=None, propensity=None):
-        self._mk_out = outcome_factory if outcome_factory is not None else (lambda: GradientBoostingClassifier(random_state=0))
-        self._mk_eff = effect_factory if effect_factory is not None else (lambda: GradientBoostingRegressor(random_state=0))
+        self._mk_out = outcome_factory if outcome_factory is not None else default_clf
+        self._mk_eff = effect_factory if effect_factory is not None else default_reg
         self.mu_t = self._mk_out()
         self.mu_c = self._mk_out()
         self.tau_t = self._mk_eff()
