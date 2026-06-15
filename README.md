@@ -135,9 +135,7 @@ A Streamlit app turns the analysis into a decision tool. *(Run `streamlit run ap
 **Dataset**
 - Kevin Hillstrom, *The MineThatData E-Mail Analytics And Data Mining Challenge* (2008)
   — the public, randomized email dataset used here.
-  [Dataset & description](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-  · [direct CSV](http://www.minethatdata.com/Kevin_Hillstrom_MineThatData_E-MailAnalytics_DataMiningChallenge_2008.03.20.csv)
-  · also loadable via [`sklift.datasets.fetch_hillstrom`](https://www.uplift-modeling.com/en/latest/api/datasets/fetch_hillstrom.html).
+  or also loadable via [`sklift.datasets.fetch_hillstrom`](https://www.uplift-modeling.com/en/latest/api/datasets/fetch_hillstrom.html).
 
 **Methodology**
 - Künzel, Sekhon, Bickel & Yu (2019), *Metalearners for estimating heterogeneous
@@ -148,6 +146,11 @@ A Streamlit app turns the analysis into a decision tool. *(Run `streamlit run ap
   Literature*, PMLR 67:1–13 — uplift evaluation, Qini/uplift curves, and why standard
   classification metrics don't apply.
   [PMLR](https://proceedings.mlr.press/v67/gutierrez17a.html) · [PDF](http://proceedings.mlr.press/v67/gutierrez17a/gutierrez17a.pdf)
+
+  **Tutorials & learning resources**
+- Juan Camilo Orduz, *Introduction to Uplift Modeling* — a hands-on walkthrough of
+  meta-learners and Qini evaluation that informed this project's approach.
+  [Write-up](https://juanitorduz.github.io/uplift/) · [PyData talk](https://www.youtube.com/watch?v=VWjsi-5yc3w)
 
 **Key libraries**
 - [`scikit-uplift`](https://www.uplift-modeling.com/) — Qini curve / Qini AUC and
