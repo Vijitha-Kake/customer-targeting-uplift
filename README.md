@@ -130,6 +130,25 @@ A Streamlit app turns the analysis into a decision tool. *(Run `streamlit run ap
 - [x] **Sprint 6** — Targeting policy, cost sensitivity & incremental revenue
 - [x] **Sprint 7** — Streamlit app & polish
 
+## References & data
+
+**Dataset**
+- Kevin Hillstrom, *MineThatData E-Mail Analytics And Data Mining Challenge* — the
+  public, randomized email dataset used here.
+  (blog.minethatdata.com; also mirrored on Kaggle as "Hillstrom Email Marketing").
+
+**Methodology**
+- Künzel, Sekhon, Bickel & Yu (2019), *Metalearners for estimating heterogeneous
+  treatment effects using machine learning* (PNAS) — the S-, T-, and X-learner framework.
+- Gutierrez & Gérardy (2017), *Causal Inference and Uplift Modelling: A Review of the
+  Literature* — uplift evaluation, Qini curves, and why classification metrics don't apply.
+
+**Key libraries**
+- `scikit-uplift` — Qini curve / Qini AUC and uplift-by-percentile metrics.
+- `statsmodels` — power analysis and the two-proportion / proportion-effect-size tools.
+- `scikit-learn` — base learners for the meta-learners (the X-learner is implemented
+  from scratch in `src/uplift_models.py`).
+
 ## Stack
 
 Python · pandas · statsmodels · scikit-uplift · scikit-learn · Streamlit
