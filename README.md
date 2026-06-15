@@ -108,14 +108,17 @@ matters most for expensive channels (direct mail, outbound calls).
 
 A Streamlit app turns the analysis into a decision tool. *(Run `streamlit run app/streamlit_app.py` after `python src/train_model.py`.)*
 
-![Targeting policy with cost slider](assets/app_targeting_policy.png)
+![Targeting policy with cost slider](assets/app_targeting_policy.pdf)
 *Targeting-policy view. Drag the cost-per-email slider and the optimal cutoff, profit, and profit curve update live. At $0.10/email and $116/conversion, targeting the top ~57% of customers beats blanket sending — and beats random targeting of the same size by more than 2×. The value is in emailing the **right** people, not fewer people.*
 
-![Cost sensitivity](assets/app_cost_sensitivity.png)
+![Cost sensitivity](assets/app_cost_sensitivity.pdf)
 *Raising the per-contact cost tightens the optimal cutoff — the policy responds to channel economics. Uplift targeting is marginal for cheap email but decisive for expensive channels (direct mail, outbound calls), where contacting a non-responder wastes real budget.*
 
-![Per-customer scoring](assets/app_customer_scoring.png)
+![Per-customer scoring](assets/app_customer_scoring.pdf)
 *Per-customer scoring. Enter a customer's features and the app returns a predicted uplift and a plain-language target / target-if-cheap / skip recommendation — the model's decision for one individual, framed for a non-technical user.*
+
+![Method story](assets/app_story.pdf)
+*The "Story" tab. A plain-language walkthrough of the method — experiment validation, the average effect, the three uplift models, the honest conversion→visit pivot, and the targeting policy — so a non-technical stakeholder understands what the tool does and why to trust it.*
 
 ## Roadmap
 
