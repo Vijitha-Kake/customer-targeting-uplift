@@ -104,6 +104,70 @@ the top ~57% of customers. That beats blanket sending, and beats random targetin
 people. The optimal cutoff tightens as per-contact cost rises, so uplift targeting
 matters most for expensive channels (direct mail, outbound calls).
 
+## Visual Results
+
+### 1. Model Comparison: Qini Curves
+
+![Qini curves comparing S-, T-, and X-learners](reports/figures/qini_curves.png)
+
+The Qini curve evaluates whether the model ranks customers by expected
+incremental response better than random targeting. All three uplift models
+outperform the random baseline on the denser visit outcome, with the
+X-learner achieving the highest Qini AUC.
+
+---
+
+### 2. Incremental Lift by Customer Decile
+
+![Uplift by decile](reports/figures/uplift_by_decile.png)
+
+Customers are ranked from highest to lowest predicted uplift and grouped into
+deciles. The top-ranked groups show the strongest incremental response,
+supporting a prioritization strategy rather than sending the campaign to
+every eligible customer.
+
+---
+
+### 3. Profit-Optimized Targeting Policy
+
+![Profit curve with optimal targeting cutoff](reports/figures/profit_curve.png)
+
+The profit curve shows the cumulative value of targeting customers in predicted
+uplift order. Under the assumed campaign economics, profit peaks when targeting
+approximately the top 57% of customers; contacting additional lower-uplift
+customers reduces expected value.
+
+---
+
+### 4. Campaign Lift Varies by Customer Recency
+
+![Lift by recency](reports/figures/lift_by_recency.png)
+
+Average campaign impact differs meaningfully across recency groups. This
+variation shows why one overall treatment-effect estimate is not sufficient
+for customer-level targeting decisions.
+
+---
+
+### 5. Estimated Uplift Segmentation
+
+![Estimated uplift quadrant segmentation](reports/figures/quadrant_segmentation.png)
+
+The model categorizes customers into estimated treatment-response segments:
+persuadables, sure things, lost causes, and sleeping dogs. The recommended
+targeting policy focuses on persuadable customers, where campaign contact is
+most likely to create incremental value.
+
+---
+
+### 6. Actionable Targeting Tiers
+
+![Uplift targeting tiers](reports/figures/uplift_tiers.png)
+
+Customers can be translated into practical targeting tiers based on predicted
+uplift, enabling marketing teams to prioritize high-value audiences and avoid
+spending on low- or negative-uplift segments.
+
 ## App preview
 
 A Streamlit app turns the analysis into a decision tool. *(Run `streamlit run app/streamlit_app.py` after `python src/train_model.py`.)*
